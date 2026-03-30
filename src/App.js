@@ -4,6 +4,9 @@ import {Switch, Route} from "react-router-dom"
 import Home from "./screen/Home/Home.js"
 import NotFound from "./screen/NotFound/notFound.js"
 import Detalle from "./screen/Detalle/detalle.js";
+import Favoritos from "./screen/Favoritos/Favoritos.js";
+
+
 
 
 function App() {
@@ -14,6 +17,7 @@ function App() {
       <Switch>
         <Route path="/" exact={true} component={Home}/>
         <Route path="/detalle/:tipo/:id" component={Detalle} />
+        <Route path="/favoritos" component={Favoritos} />
         <Route path="" component={NotFound}/>
 
       </Switch>

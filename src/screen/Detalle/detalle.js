@@ -26,6 +26,35 @@ class Detalle extends Component {
   }
 
 
+  //Hago al funcion para agregar a favoritos una pelicula
+  agregarFavorito() {
+
+    // Traigo lo que ya hay (o nada)
+    let favoritos = localStorage.getItem("favoritos");
+
+    // Si no hay nada, crear array vacío
+    if (favoritos === null) {
+        favoritos = [];
+    } else {
+        favoritos = JSON.parse(favoritos);
+    }
+
+    // Agregar el nuevo favorito a la lista de favoritos previa. Tambien guardo el titulo para usarlo en favoritos.
+    favoritos.push({
+        id: this.state.data.id,
+        tipo: this.props.match.params.tipo,
+        titulo: this.state.data.title || this.state.data.name
+    });
+
+    // Guardo todo otra vez en el Storae para podes usarlo en otra sxreen. 
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    }
+
+
+
+
+
+
 
   //Los || es un or, se muestra o uno o el otro, dependiendo lo que corresponda si es serie o pelicula. 
   render() {
@@ -63,7 +92,10 @@ class Detalle extends Component {
             Genero/s: {data.genres.map(genero => genero.name).join(", ")}
         </p>
 
-        <button>Agregar a favoritos</button>
+        <button onClick={() => this.agregarFavorito()}>
+        Agregar a favoritos
+        </button>     
+
       </div>
     );
   }

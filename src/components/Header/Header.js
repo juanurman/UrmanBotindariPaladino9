@@ -17,7 +17,7 @@ function Header() {
                         <a className="nav-link" href="series.html">Series</a>
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Favoritas</Link>
+                        <Link to="/favoritos" className="nav-link">Favoritas</Link>
                     </li>
                     <li className="nav-item ml-auto">
                         <Link to="/" className="nav-link">Registro</Link>
