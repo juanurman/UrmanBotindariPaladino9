@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Loader from "../../components/Loader/loader.js"
+import Loader from "../../components/Loader/loader.js";
+import DetalleCard from "../../components/DetalleCard/detalleCard.js";
 
 //Ese es un componente el cual toma como prop un id el cual saca con const id = this.props.match.params.id; cuando se monta el componente.
 //Cuando tiene el id, me meto directo en la API de ese Id (CON EL API KEY QUE ES LA CONTRA) y la info la guardo en el estado.
@@ -29,7 +30,7 @@ class Detalle extends Component {
   //Hago al funcion para agregar a favoritos una pelicula
   agregarFavorito() {
 
-    // Traigo lo que ya hay (o nada)
+    // Traigo lo que ya hay o nada
     let favoritos = localStorage.getItem("favoritos");
 
     // Si no hay nada, crear array vacío
@@ -48,13 +49,7 @@ class Detalle extends Component {
 
     // Guardo todo otra vez en el Storae para podes usarlo en otra sxreen. 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
-    }
-
-
-
-
-
-
+  }
 
   //Los || es un or, se muestra o uno o el otro, dependiendo lo que corresponda si es serie o pelicula. 
   render() {
@@ -62,41 +57,15 @@ class Detalle extends Component {
       return <Loader />;
     }
 
-    const data = this.state.data;
-
     return (
-      <div>
-        {/* Imagen, serie y pelicula comparten nombre en el obj literal*/}
-        <img
-          src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
-          alt={data.title || data.name} 
+      <main>
+        <DetalleCard 
+            data={this.state.data} 
+
+            //A el componente hijo le paso la funcion de agregarfavorito para el boton. 
+            agregar={() => this.agregarFavorito()} 
         />
-
-        {/* Título, title es de pelicula, name es de serie*/}
-        <h2>Titulo: {data.title || data.name}</h2>
-
-        {/* Rating, como en la imagen comparten nombre en el obj literal de la API */}
-        <p>Rating: {data.vote_average}</p>
-
-        {/* Fecha, release_date es de pelciulaas. first_air_date es de serie */}
-        <p>Fecha estreno: {data.release_date || data.first_air_date}</p>
-
-        {/* Duración (solo aparece en  películas) */}
-        {data.runtime && <p>Duración: {data.runtime} min</p>}
-
-        {/* Sinopsis, tanto pelicula como serie comparten el nombre en el obj literal */}
-        <p>Sinopsis: {data.overview}</p>
-
-        {/* Géneros, tambien comparten. Como a veces es mas de uno se juntan con el .join. */}
-        <p>
-            Genero/s: {data.genres.map(genero => genero.name).join(", ")}
-        </p>
-
-        <button onClick={() => this.agregarFavorito()}>
-        Agregar a favoritos
-        </button>     
-
-      </div>
+      </main>
     );
   }
 }
