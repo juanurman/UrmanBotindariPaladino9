@@ -3,7 +3,10 @@ import React from 'react';
 
 //Le paso como prop las props que traje del componente padre, la data ya filtrada y trabajada y la funcion agregar a favoritos
 function DetalleCard(props) {
-    const { data, agregar } = props;
+
+    //Le doy nombre de variable a la data que traigo del componente padre y a la funcion agregar a favoritos. 
+    const data = props.data;
+    const agregar = props.agregar;
 
     return (
         <div>
@@ -22,7 +25,7 @@ function DetalleCard(props) {
             {/* Fecha, release_date es de pelciulaas. first_air_date es de serie */}
             <p>Fecha estreno: {data.release_date || data.first_air_date}</p>
 
-            {/* Duración (solo aparece en  películas) */}
+            {/* Duracion (solo aparece en  peliculas) */}
             {data.runtime && <p>Duración: {data.runtime} min</p>}
 
             {/* Sinopsis, tanto pelicula como serie comparten el nombre en el obj literal */}
