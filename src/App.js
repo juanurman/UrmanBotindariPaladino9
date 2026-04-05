@@ -5,6 +5,7 @@ import Home from "./screen/Home/Home.js"
 import NotFound from "./screen/NotFound/notFound.js"
 import Detalle from "./screen/Detalle/detalle.js";
 import Favoritos from "./screen/Favoritos/Favoritos.js";
+import Registro from "./screen/Registro/Registro.js";
 
 
 
@@ -18,8 +19,8 @@ function App() {
         <Route path="/" exact={true} component={Home}/>
         <Route path="/detalle/:tipo/:id" component={Detalle} />
         <Route path="/favoritos" component={Favoritos} />
+        <Route path="/registro" component={Registro}/>
         <Route path="" component={NotFound}/>
-
       </Switch>
       </div>
       <Footer/> 
