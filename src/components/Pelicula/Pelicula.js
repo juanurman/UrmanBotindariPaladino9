@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+
 
 
 class Pelicula extends Component {
@@ -36,9 +38,10 @@ class Pelicula extends Component {
                         <button className='btn btn-secondary' onClick={() => this.verMas(pelicula.id)}>
                             {this.state.seleccionadoId === pelicula.id ? "Ocultar descripción" : "Ver descripción"}
                         </button>
-
-                        <a href="movie.html" className="btn btn-primary">Ver más</a>
-                        <a href="#" className="btn alert-primary">🩶</a>
+                        <Link to={`/detalle/peliculas/${pelicula.id}`} className="btn btn-primary">
+                            Ver más
+                        </Link>
+                        {/* <a href="#" className="btn alert-primary">🩶</a> */}
                     </div>
 
                 </article>

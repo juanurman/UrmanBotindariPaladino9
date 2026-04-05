@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom";
+import Loader from "../Loader/loader";
 import Pelicula from "../Pelicula/Pelicula"; 
+
 
 let url_popular = "https://api.themoviedb.org/3/discover/movie?api_key=a016baaa9f1f222d6f473a9acae180a0&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc";
 
@@ -36,21 +39,29 @@ class Peliculas extends Component {
     render() {
         return (
             <>
-                <h2 className="alert alert-primary">Películas Populares</h2>
+                <h2 className="alert alert-primary">Popular movies this week</h2>
                 <section className='row cards'>
                     {this.state.populares.length === 0 ? 
-                        <h3>Cargando populares...</h3> : 
+                        <Loader/> : 
                         <Pelicula info={this.state.populares} />
                     }
                 </section>
+                <Link to="/Categoria/populares" className="btn btn-primary">
+                        Ver todas las Populares
+                </Link>
 
-                <h2 className="alert alert-primary">Películas en Cartelera</h2>
+                <h2 className="alert alert-primary">Movies now playing</h2>
                 <section className="row cards">
                     {this.state.cartelera.length === 0 ? 
-                        <h3>Cargando cartelera...</h3> : 
+                        <Loader/> : 
                         <Pelicula info={this.state.cartelera} />
                     }
                 </section>
+                 <Link to="/Categoria/cartelera" className="btn btn-primary">
+                        Ver todas en Cartelera
+                </Link>
+
+
             </>
         );
     }
