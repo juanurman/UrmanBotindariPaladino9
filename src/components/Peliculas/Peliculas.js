@@ -46,7 +46,7 @@ class Peliculas extends Component {
                         <Pelicula info={this.state.populares} />
                     }
                 </section>
-                <Link to="/Categoria/populares" className="btn btn-primary">
+                <Link to="/categoria/Populares" className="btn btn-primary">
                         Ver todas las Populares
                 </Link>
 
@@ -57,7 +57,7 @@ class Peliculas extends Component {
                         <Pelicula info={this.state.cartelera} />
                     }
                 </section>
-                 <Link to="/Categoria/cartelera" className="btn btn-primary">
+                 <Link to="/categoria/Cartelera" className="btn btn-primary">
                         Ver todas en Cartelera
                 </Link>
 

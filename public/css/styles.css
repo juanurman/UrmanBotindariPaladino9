@@ -84,6 +84,9 @@ nav {
 .all-movies .single-card-movie {
     width: 15%;
 }
+.hide{
+    display: none;
+}
 
 @media(min-width: 765px){
     nav {

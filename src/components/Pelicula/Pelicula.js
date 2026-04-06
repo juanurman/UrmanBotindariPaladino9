@@ -31,12 +31,12 @@ class Pelicula extends Component {
                     <div className="cardBody">
                         <h5 className="card-title">{pelicula.title}</h5>
                         
-                        <section className={this.state.seleccionadoId === pelicula.id ? "show" : "hide"}>
+                        <section className={this.state.seleccionadoId === pelicula.id ? "hide" : "block"}>
                             <p className="card-text">{pelicula.overview}</p>
                         </section>
 
                         <button className='btn btn-secondary' onClick={() => this.verMas(pelicula.id)}>
-                            {this.state.seleccionadoId === pelicula.id ? "Ocultar descripción" : "Ver descripción"}
+                            {this.state.seleccionadoId === pelicula.id ? "Ver descripción" : "Ocultar descripción"}
                         </button>
                         <Link to={`/detalle/peliculas/${pelicula.id}`} className="btn btn-primary">
                             Ver más

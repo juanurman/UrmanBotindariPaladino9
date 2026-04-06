@@ -6,7 +6,7 @@ import NotFound from "./screen/NotFound/notFound.js"
 import Detalle from "./screen/Detalle/detalle.js";
 import Favoritos from "./screen/Favoritos/Favoritos.js";
 import Registro from "./screen/Registro/Registro.js";
-import Categoria from "./components/Categoria/Categoria.js";
+import Categorias from "./screen/Categorias/Categorias.js";
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Route path="/detalle/:tipo/:id" component={Detalle} />
         <Route path="/favoritos" component={Favoritos} />
         <Route path="/registro" component={Registro}/>
-        <Route path="/Categoria/:categoria" component={Categoria} />
+        <Route path="/categoria/:categoria" component={Categorias} />
         <Route path="" component={NotFound}/>
       </Switch>
       </div>

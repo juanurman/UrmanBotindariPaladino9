@@ -11,10 +11,14 @@ function Header() {
                         <Link to="/" className="nav-link">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="movies.html">Películas</a>
+                        <Link to="/categoria/Movies" className="nav-link">
+                            Movies
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="series.html">Series</a>
+                        <Link to="/categoria/Series" className="nav-link">
+                            Series
+                        </Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/favoritos" className="nav-link">Favoritas</Link>

@@ -4,32 +4,45 @@ import Loader from "../Loader/loader";
 
 
 class Categoria extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             peliculas: [],
             primeraPagina: 1
         };
     }
 
-    obtenerUrl = (pagina) => {
-        const catego = this.props.categoria; 
-        if (catego === "populares") {
-            return `https://api.themoviedb.org/3/movie/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US&page=${pagina}`;
-        } else {
-            return `https://api.themoviedb.org/3/discover/movie?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US&with_release_type=2%7C3&release_date.gte=2026-03-01&release_date.lte=2026-04-30&page=${pagina}`;
-        }
-    }
+    urls = {
+        Populares: "https://api.themoviedb.org/3/movie/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
 
+        Cartelera: "https://api.themoviedb.org/3/movie/now_playing?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
+
+        Movies: "https://api.themoviedb.org/3/trending/movie/day?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
+
+        Series: "https://api.themoviedb.org/3/tv/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US"
+    }
     componentDidMount() {
-        fetch(this.obtenerUrl(this.state.primeraPagina))
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ peliculas: data.results });
-            })
-            .catch(error => console.log(error));
+        const urlBase = this.urls[this.props.categoria];
+        fetch(`${urlBase}&page=1`)
+            .then(res => res.json())
+            .then(data => this.setState({ peliculas: data.results }))
+            .catch(err => console.log(err));
     }
-
+    componentDidUpdate(props) {
+        if (this.props.categoria !== props.categoria) {
+            
+            this.setState({ 
+                peliculas: [], 
+                primeraPagina: 1 
+            }, () => {
+                const urlBase = this.urls[this.props.categoria];
+                
+                fetch(`${urlBase}&page=1`)
+                    .then(res => res.json())
+                    .then(data => this.setState({ peliculas: data.results }))
+                    .catch(err => console.log(err));
+            });
+        }}
     cargarMas = () => {
         const proximaPagina = this.state.primeraPagina + 1;
         
@@ -48,7 +61,7 @@ class Categoria extends Component {
         return (
             <main>
                 <h2 className="alert alert-primary">
-                    Todas las Películas {this.props.categoria === "populares" ? "Populares" : "en Cartelera"}
+                    {this.props.categoria}
                 </h2>
 
                 <section className="row cards all-movies">
