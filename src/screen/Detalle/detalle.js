@@ -20,7 +20,7 @@ class Detalle extends Component {
     const tipo = this.props.match.params.tipo;
     const id = this.props.match.params.id;
 
-    fetch(`https://api.themoviedb.org/3/${tipo}/${id}?api_key=e9f925b12dca795f233417e113ec423a`)
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e9f925b12dca795f233417e113ec423a`)
       .then(response => response.json())
       .then(data => this.setState({ data: data }))
       .catch(error => console.log(error));

@@ -38,7 +38,7 @@ class Pelicula extends Component {
                         <button className='btn btn-secondary' onClick={() => this.verMas(pelicula.id)}>
                             {this.state.seleccionadoId === pelicula.id ? "Ver descripción" : "Ocultar descripción"}
                         </button>
-                        <Link to={`/detalle/peliculas/${pelicula.id}`} className="btn btn-primary">
+                        <Link to={`/detalle/movie/${pelicula.id}`} className="btn btn-primary">
                             Ver más
                         </Link>
                         {/* <a href="#" className="btn alert-primary">🩶</a> */}
