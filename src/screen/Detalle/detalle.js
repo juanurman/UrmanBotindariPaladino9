@@ -43,7 +43,7 @@ class Detalle extends Component {
     // Agregar el nuevo favorito a la lista de favoritos previa. Tambien guardo el titulo para usarlo en favoritos.
     favoritos.push({
         id: this.state.data.id,
-        tipo: this.props.match.params.tipo,
+        tipo: "movie",
         titulo: this.state.data.title || this.state.data.name
     });
 

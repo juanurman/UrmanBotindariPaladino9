@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 function FavoritoItem(props) {
     
     //Le doy nombre de variable aal item (Que trae cada item de favoritos) y nombre de variable a la funcion eliminar de favoritos
+    //El item trae de Favoritos.js todo el item con la pelicula y su info.
+    //El eliminar trae la funcion eliminar especifica para cada pelicula. La voy ausar en el boton "eliminar"
     const item = props.item;
     const eliminar = props.eliminar;
 
