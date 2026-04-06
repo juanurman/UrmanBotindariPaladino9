@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 
+//El componente registro esta formado por un componente con estado. El cual comienza con las propiedades email, paswword y error, todas en null.
 class FormRegistro extends Component {
     constructor(props){
         super(props)
@@ -11,24 +12,28 @@ class FormRegistro extends Component {
         }
     }
 
-    cambios(e){
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+                                                        //?????
+                                                        cambios(e){
+                                                            this.setState({
+                                                                [e.target.name]: e.target.value
+                                                            })
+                                                        }
 
+
+
+                                                        
     evitarsubmit(e){
-        
-    e.preventDefault()
+            
+        e.preventDefault()
 
-    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
-    let email = this.state.email
-    let password = this.state.password
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
+        let email = this.state.email
+        let password = this.state.password
 
-    for(let i = 0; i < usuarios.length; i++){
-        if(usuarios[i].email === email){
-            this.setState({ error: "El email ya está en uso" })
-            return
+        for(let i = 0; i < usuarios.length; i++){
+            if(usuarios[i].email === email){
+                this.setState({ error: "El email ya está en uso" })
+                return
         }
     }
 
