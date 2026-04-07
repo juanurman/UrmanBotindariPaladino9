@@ -16,13 +16,13 @@ class Categoria extends Component {
         Populares: "https://api.themoviedb.org/3/movie/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
         Cartelera: "https://api.themoviedb.org/3/movie/now_playing?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
         Movies: "https://api.themoviedb.org/3/trending/movie/day?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US",
-        Series: "https://api.themoviedb.org/3/tv/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US"
+        TV: "https://api.themoviedb.org/3/tv/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US"
     }
 
     // se ejecuta cuando el componente se carga por primera vez
     componentDidMount() {
         const urlBase = this.urls[this.props.categoria]; // el valor viene de la prop del screen Categorias.js. Dependiendo lo que viene se usa un endpoint u otro.
-
+        console.log(urlBase)
         fetch(`${urlBase}&page=1`)
             .then(res => res.json())
             .then(data => this.setState({ peliculas: data.results })) 

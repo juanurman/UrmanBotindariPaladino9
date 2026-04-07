@@ -37,10 +37,8 @@ class Favoritos extends Component {
   render() {
     // Itero el estado y los que son tipo peliculas los meto en una variable, los tipos tv en otra. 
     //Estos despues los voy a iterar y renderizar pasando informacion a los componentes hijos.
-    // const peliculas = this.state.favoritos.filter(i => i.tipo === "movie");
-    const peliculas = this.state.favoritos;
-    console.log(peliculas)
-    // const series = this.state.favoritos.filter(i => i.tipo === "tv");
+    const peliculas = this.state.favoritos.filter(i => i.tipo === "movie");
+    const series = this.state.favoritos.filter(i => i.tipo === "tv");
     return (
       <div>
         <h2>Películas favoritas</h2>
@@ -57,13 +55,13 @@ class Favoritos extends Component {
         <h2>Series favoritas</h2>
 
         {/* Mapeo la variable series y le paso la iformacion al componente FavoritoItem. Tambien le paso la info del id a eliminar para el boton eliminar */}
-        {/* {series.map(serie => (
+        {series.map(serie => (
             <FavoritoItem 
                 key={serie.id} 
                 item={serie} 
                 eliminar={(id) => this.eliminarFavorito(id)} 
             />
-        ))} */}
+        ))}
       </div>
     );
   }

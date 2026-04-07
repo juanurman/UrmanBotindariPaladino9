@@ -16,7 +16,7 @@ function Header() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/categoria/Series" className="nav-link">
+                        <Link to="/categoria/TV" className="nav-link">
                             Series
                         </Link>
                     </li>

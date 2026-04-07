@@ -12,18 +12,22 @@ class Detalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: null,
     };
   }
 
   componentDidMount() {
     const tipo = this.props.match.params.tipo;
     const id = this.props.match.params.id;
-
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e9f925b12dca795f233417e113ec423a`)
+    
+    fetch(`https://api.themoviedb.org/3/${tipo}/${id}?api_key=e9f925b12dca795f233417e113ec423a`)
       .then(response => response.json())
-      .then(data => this.setState({ data: data }))
+      .then(data => this.setState({ 
+        data: data,
+        tipo:tipo
+       }))
       .catch(error => console.log(error));
+
   }
 
 
@@ -43,12 +47,14 @@ class Detalle extends Component {
     // Agregar el nuevo favorito a la lista de favoritos previa. Tambien guardo el titulo para usarlo en favoritos.
     favoritos.push({
         id: this.state.data.id,
-        tipo: "movie",
+        tipo: this.state.tipo,
         titulo: this.state.data.title || this.state.data.name
+    
     });
 
     // Guardo todo otra vez en el Storae para podes usarlo en otra sxreen. 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    console.log(this.state.data.id, this.state.tipo, this.state.data.name)
   }
 
   //Los || es un or, se muestra o uno o el otro, dependiendo lo que corresponda si es serie o pelicula. 
