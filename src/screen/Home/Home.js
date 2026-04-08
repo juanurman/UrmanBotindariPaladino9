@@ -6,7 +6,7 @@ import Peliculas from "../../components/Peliculas/Peliculas";
 function Home () {
     return (
         <>
-            <Search/>
+            <Search />
             <Peliculas/>
         </>
     );

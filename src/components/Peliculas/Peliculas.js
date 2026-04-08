@@ -27,7 +27,7 @@ class Peliculas extends Component {
             .then(data => {
                 this.setState({
                     // guarda solo las primeras 4 películas
-                    populares: data.results.filter((pelicula, index) => index < 4)
+                populares: data.results.filter((pelicula, index) => index < 4)
                 });
             })
             .catch(error => console.log(error));
