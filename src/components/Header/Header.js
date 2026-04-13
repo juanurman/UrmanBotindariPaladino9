@@ -27,7 +27,7 @@ function Header() {
                         <Link to="/registro" className="nav-link">Registro</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Login</Link>
+                        <Link to="/login" className="nav-link">Login</Link>
                     </li>
                 </ul>
             </nav>

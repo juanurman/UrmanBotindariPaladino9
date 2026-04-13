@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 //El componente registro esta formado por un componente con estado. El cual comienza con las propiedades email, paswword y error, todas en null.
 class FormRegistro extends Component {
@@ -20,7 +21,7 @@ class FormRegistro extends Component {
     // Actualiza el state usando el name como clave    
     cambios(e){
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value 
         })
     }
 
@@ -63,6 +64,13 @@ class FormRegistro extends Component {
     //Luego guardo la variable usuarios en el localStorage
     usuarios.push(nuevoUsuario)
     localStorage.setItem("usuarios", JSON.stringify(usuarios))
+    
+    //COOKIES
+    const cookies = new Cookies()
+
+    cookies.set("usuario", email)
+
+    this.props.history.push("/login")
 }
 
     //El render lo que tiene dentro es todo lo que se renderiza en la screen, osea lo que se ve 
