@@ -23,7 +23,11 @@ class FormLogin extends Component {
             
         e.preventDefault()
 
-        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) 
+        
+        if(usuarios ===  null){
+            usuarios = []
+        }
         let email = this.state.email
         let password = this.state.password
 
@@ -36,17 +40,12 @@ class FormLogin extends Component {
         }
 
     if(usuarioEncontrado === null){
-        this.setState({ error: "Email o contraseña incorrectos" })
-        return
+        this.setState({ error: "Credenciales incorrectas" })
+    } else {
+        const cookies = new Cookies()
+        cookies.set("usuario", email)
+        this.props.history.push("/")
     }
-
-
-    //COOKIES
-    const cookies = new Cookies()
-
-    cookies.set("usuario", email)
-
-    this.props.history.push("/")
 }
 
 

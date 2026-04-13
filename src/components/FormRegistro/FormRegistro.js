@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import Cookies from "universal-cookie";
 
 //El componente registro esta formado por un componente con estado. El cual comienza con las propiedades email, paswword y error, todas en null.
 class FormRegistro extends Component {
@@ -12,8 +11,6 @@ class FormRegistro extends Component {
             error: ""
         }
     }
-
-
 
     // cambios(e) se ejecuta cuando el usuario escribe.
     // e.target.name = nombre del input (email)
@@ -36,38 +33,36 @@ class FormRegistro extends Component {
             
         e.preventDefault()
 
-        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || []
+        let usuarios = JSON.parse(localStorage.getItem("usuarios"))
         let email = this.state.email
         let password = this.state.password
+        let emailregis = false
+
+        if(usuarios === null){
+            usuarios = []
+        }
 
         for(let i = 0; i < usuarios.length; i++){
             if(usuarios[i].email === email){
-                this.setState({ error: "El email ya está en uso" })
-                return
+                emailregis = true
+            }
+        }
+
+        if(emailregis === true){
+            this.setState({ error: "El email ya está en uso" })
+        } else if(password.length < 6){
+            this.setState({ error: "La contraseña debe tener al menos 6 caracteres" })
+        } else {
+            let nuevoUsuario = {
+                email: email,
+                password: password
+            }
+
+            usuarios.push(nuevoUsuario)
+            localStorage.setItem("usuarios", JSON.stringify(usuarios))
+            this.props.history.push("/login")
         }
     }
-
-    //Sie l largo del valor dentro de la variable password es menos a 6 caracteres, se pone en la variable error del estado, el mensaje indicando el error
-    if(password.length < 6){
-        this.setState({ error: "La contraseña debe tener al menos 6 caracteres" })
-        return
-    }
-
-
-    //Una vez ya hechas todas las validaciones, se guarda el email y el ususario en una variable de usuario nuevo
-    let nuevoUsuario = {
-        email: email,
-        password: password
-    }
-
-    //Le meto a la variable usuarios la variable usuarioNuevo con el push. 
-    //Luego guardo la variable usuarios en el localStorage
-    usuarios.push(nuevoUsuario)
-    localStorage.setItem("usuarios", JSON.stringify(usuarios))
-    
-    this.props.history.push("/login")
-}
-
     //El render lo que tiene dentro es todo lo que se renderiza en la screen, osea lo que se ve 
     //El render tiene todas las etiquetas especificas a la hora de hacer un form, label, input. El label dentro tiene el type que es email. 
     //esto se repite dos veces, una vez para el mail, otra para la contraseña. 

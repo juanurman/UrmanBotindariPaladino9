@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+
+
 
 function Header() {
+    const cookies = new Cookies()
+    let usuario = cookies.get("usuario")
+    
     return (
         <div>
             <h1>UdeSA Movies</h1>
@@ -20,15 +27,21 @@ function Header() {
                             Cartelera
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link to="/favoritos" className="nav-link">Favoritas</Link>
-                    </li>
-                    <li className="nav-item ml-auto">
-                        <Link to="/registro" className="nav-link">Registro</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/login" className="nav-link">Login</Link>
-                    </li>
+                    {usuario ? (
+                        <li className="nav-item">
+                            <Link to="/favoritos" className="nav-link">Favoritas</Link>
+                        </li>): null}
+
+                    {!usuario ? (
+                        <li className="nav-item ml-auto">
+                            <Link to="/registro" className="nav-link">Registro</Link>
+                        </li>): null}
+
+                    {!usuario ? (
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link">Login</Link>
+                        </li>
+                    ): null}
                 </ul>
             </nav>
         </div>
