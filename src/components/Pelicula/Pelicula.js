@@ -59,7 +59,7 @@ class Pelicula extends Component {
                             <h5 className="card-title">{pelicula.title}</h5>
                             
                             {/* descripción: se muestra o se oculta según el state */}
-                            <section className={this.state.seleccionadoId === pelicula.id ? "hide" : "block"}>
+                            <section className={pelicula.verDescripcion ? "block" : "hide"}>
                                 <p className="card-text">{pelicula.overview}</p>
                             </section>
 
@@ -69,9 +69,9 @@ class Pelicula extends Component {
                                 onClick={() => this.verMas(pelicula.id)}
                             >
                                 {/* cambia el texto según si está abierta o cerrada */}
-                                {this.state.seleccionadoId === pelicula.id 
-                                    ? "Ver descripción" 
-                                    : "Ocultar descripción"}
+                                {pelicula.verDescripcion
+                                    ? "Ocultar descripción" 
+                                    : "Ver descripción"}
                             </button>
 
                             {/* link para ir al detalle de la película */}
