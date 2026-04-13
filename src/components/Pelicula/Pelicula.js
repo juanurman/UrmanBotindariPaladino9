@@ -5,17 +5,32 @@ class Pelicula extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            descripcion: [],
             seleccionadoId: null
         };
     }
-
-    // se ejecuta cuando hacés click en el botón
-    verMas = (id) => {
-        this.setState({
-            // si ya está abierta, la cierra (null)
-            // si no está abierta, guarda ese id
-            seleccionadoId: this.state.seleccionadoId === id ? null : id
+    componentDidMount(){
+        let infoModificada = this.props.info.map(peli => {
+            // Le "enchufamos" la propiedad nueva directamente al objeto
+            peli.verDescripcion = false; 
+            
+            // Devolvemos la película ya modificada
+            return peli; 
         });
+        this.setState({ peliculas: infoModificada });
+        }
+    
+    // se ejecuta cuando hacés click en el botón
+    verMas(id) {
+       let infoCambiada = this.state.peliculas.map(peli => {
+            if (peli.id === id) {
+                // Invertimos el valor directamente usando el punto
+                peli.verDescripcion = !peli.verDescripcion; 
+            }
+            return peli;
+        });
+
+        this.setState({ peliculas: infoCambiada });
     }
 
     render() {
