@@ -7,7 +7,8 @@ class Categoria extends Component {
         super(props);
         this.state = {
             peliculas: [], // guarda todas las películas de la categoría
-            primeraPagina: 1 // controla la pagina actual
+            primeraPagina: 1, // controla la pagina actual
+            value: ""
         };
     }
 
@@ -47,6 +48,7 @@ class Categoria extends Component {
                     .catch(err => console.log(err));
             });
         }
+        console.log(this.state.peliculas)
     }
 
     // función para cargar más películas (paginacion)
@@ -64,10 +66,26 @@ class Categoria extends Component {
             })
             .catch(error => console.log(error));
     }
-
+     controlCambios(e){
+        this.setState({
+        value: e.target.value
+    })
+}
     render() {
+        let peliculasFiltradas = this.state.peliculas.filter(peli => {
+        // Busca title. Si no hay, busca name. Si por algún motivo no hay ninguno, usa un string vacío.
+       const tituloSeguro = peli.title || peli.name || ""; 
+    
+        return tituloSeguro.toLowerCase().includes(this.state.value.toLowerCase());
+    });
         return (
             <main>
+                <form className="form">
+                    <label className="label-filtrar">
+                        Filtrar pelicula : </label>
+                    <input type="text" onChange={(e)=> this.controlCambios(e)} value={this.state.value}/>
+
+            </form>
                 {/* muestra el nombre de la categoría */}
                 <h2 className="alert alert-primary">
                     {this.props.categoria}
@@ -80,7 +98,7 @@ class Categoria extends Component {
                             <Loader/>
                         ) : (
                             // si hay datos muestra películas
-                            <Pelicula info={this.state.peliculas} /> 
+                            <Pelicula info={peliculasFiltradas} /> 
                         )
                     }
                 </section>
