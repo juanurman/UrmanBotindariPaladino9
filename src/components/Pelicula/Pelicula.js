@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
+//El id es simplemente un identificador único que tiene cada película, como si fuera su DNI. En tu componente lo usás para recordar cuál es la película que el usuario abrió al hacer clic en “ver más”. En lugar de guardar muchas variables para cada película, guardás solo un dato: el id de la película seleccionada. Entonces, cada vez que React dibuja la pantalla, compara el id de cada película con el que tenés guardado en el estado. Si coinciden, esa película se muestra “abierta” (con su descripción visible); si no coinciden, queda cerrada.
+
+
+//Se crea el componente con estado. Tiene un estado con la variable ID
+//Cada pelicula que viene de la API (TMDB) tiene un id único
 class Pelicula extends Component {
     constructor(props) {
         super(props);
