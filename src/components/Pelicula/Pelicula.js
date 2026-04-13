@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
+//El id es simplemente un identificador único que tiene cada película, como si fuera su DNI. En tu componente lo usás para recordar cuál es la película que el usuario abrió al hacer clic en “ver más”. En lugar de guardar muchas variables para cada película, guardás solo un dato: el id de la película seleccionada. Entonces, cada vez que React dibuja la pantalla, compara el id de cada película con el que tenés guardado en el estado. Si coinciden, esa película se muestra “abierta” (con su descripción visible); si no coinciden, queda cerrada.
+
+
+//Se crea el componente con estado. Tiene un estado con la variable ID
+//Cada pelicula que viene de la API (TMDB) tiene un id único
 class Pelicula extends Component {
     constructor(props) {
         super(props);
@@ -9,11 +14,10 @@ class Pelicula extends Component {
         };
     }
 
-    // se ejecuta cuando hacés click en el botón
+    // Funcion la cual se ejecuta cuando hacés click en el botón
+    //El null en ese código se usa para indicar que no hay ninguna película seleccionada o abierta. Cuando el usuario hace clic en una película, se guarda su id en el estado y eso hace que se muestre su contenido. Pero si vuelve a hacer clic en la misma película, en lugar de mantenerla abierta, el estado se cambia a null, lo que significa “no hay ninguna seleccionada”, y entonces se cierra
     verMas = (id) => {
         this.setState({
-            // si ya está abierta, la cierra (null)
-            // si no está abierta, guarda ese id
             seleccionadoId: this.state.seleccionadoId === id ? null : id
         });
     }
