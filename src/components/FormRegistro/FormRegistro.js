@@ -65,11 +65,6 @@ class FormRegistro extends Component {
     usuarios.push(nuevoUsuario)
     localStorage.setItem("usuarios", JSON.stringify(usuarios))
     
-    //COOKIES
-    const cookies = new Cookies()
-
-    cookies.set("usuario", email)
-
     this.props.history.push("/login")
 }
 
