@@ -24,7 +24,20 @@ class Pelicula extends Component {
         });
         this.setState({ peliculas: infoModificada });
         }
-    
+    //Si hay un update inserta el verdescripcion y vuelve todo false
+    componentDidUpdate(props) {
+        if (this.props.info !== props.info) {
+           let infoModificada = this.props.info.map(peli => {
+            // Le "enchufamos" la propiedad nueva directamente al objeto
+            peli.verDescripcion = false; 
+            
+            // Devolvemos la película ya modificada
+            return peli; 
+        });
+            
+            this.setState({ peliculas: infoModificada });
+        }
+    }
     // se ejecuta cuando hacés click en el botón
     verMas(id) {
        let infoCambiada = this.state.peliculas.map(peli => {
