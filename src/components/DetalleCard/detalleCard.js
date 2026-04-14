@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+//Este componente es para que cuando se toca ver detalle. Este es el componente hijo de la screen Detalle.
 //Le paso como prop las props que traje del componente padre, la data ya filtrada y trabajada y la funcion agregar a favoritos
 function DetalleCard(props) {
 

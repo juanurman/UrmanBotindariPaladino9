@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Pelicula from "../Pelicula/Pelicula"; 
 import Loader from "../Loader/loader";
 
+//Creo el componente categoria, el cual dependiendo la categoria que se selecciona, cambia el endpoint y esa infrmacion se guarda en el array del state.
 class Categoria extends Component {
     constructor(props) {
         super(props);
@@ -20,10 +21,17 @@ class Categoria extends Component {
         TV: "https://api.themoviedb.org/3/tv/popular?api_key=a016baaa9f1f222d6f473a9acae180a0&language=en-US"
     }
 
+    // Metodo que prepara la endpoint dependiendo la categorua y el numero de PAGINA. se usa para el cargar mas
+    obtenerUrl(pagina) {
+        const urlBase = this.urls[this.props.categoria];
+        return `${urlBase}&page=${pagina}`;
+    }
+
     // se ejecuta cuando el componente se carga por primera vez
     componentDidMount() {
         const urlBase = this.urls[this.props.categoria]; // el valor viene de la prop del screen Categorias.js. Dependiendo lo que viene se usa un endpoint u otro.
         console.log(urlBase)
+        //Se hace el fetch con la url que es guardada en una variable y sacada del objeto literal dependiendo la prop que llega. 
         fetch(`${urlBase}&page=1`)
             .then(res => res.json())
             .then(data => this.setState({ peliculas: data.results })) 
@@ -51,7 +59,7 @@ class Categoria extends Component {
         console.log(this.state.peliculas)
     }
 
-    // función para cargar más películas (paginacion)
+    // función para cargar más películas (paginacion). Lo que hace es que vuelve a tomar y hacer el fetch de la api y concatena la info nueva con la que ya estaba en el array del state
     cargarMas = () => {
         const proximaPagina = this.state.primeraPagina + 1;
 
@@ -61,31 +69,34 @@ class Categoria extends Component {
                 this.setState({
                     // agrega las nuevas películas a las que ya tenía y cambia el valor paginaactual a la variable proximapagina
                     peliculas: this.state.peliculas.concat(data.results),
-                    paginaActual: proximaPagina
+                    primeraPagina: proximaPagina 
                 });
             })
             .catch(error => console.log(error));
     }
-     controlCambios(e){
+
+    controlCambios(e){
         this.setState({
-        value: e.target.value
-    })
-}
+            value: e.target.value
+        })
+    }
+
     render() {
         let peliculasFiltradas = this.state.peliculas.filter(peli => {
-        // Busca title. Si no hay, busca name. Si por algún motivo no hay ninguno, usa un string vacío.
-       const tituloSeguro = peli.title || peli.name || ""; 
-    
-        return tituloSeguro.toLowerCase().includes(this.state.value.toLowerCase());
-    });
+            // Busca title. Si no hay, busca name. Si por algún motivo no hay ninguno, usa un string vacío.
+            const tituloSeguro = peli.title || peli.name || ""; 
+        
+            return tituloSeguro.toLowerCase().includes(this.state.value.toLowerCase());
+        });
+
         return (
             <main>
                 <form className="form">
                     <label className="label-filtrar">
                         Filtrar pelicula : </label>
                     <input type="text" onChange={(e)=> this.controlCambios(e)} value={this.state.value}/>
+                </form>
 
-            </form>
                 {/* muestra el nombre de la categoría */}
                 <h2 className="alert alert-primary">
                     {this.props.categoria}

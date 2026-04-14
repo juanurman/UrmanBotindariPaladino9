@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//Este componente es el hijo de la screen favorito.
 function FavoritoItem(props) {
     
     //Le doy nombre de variable aal item (Que trae cada item de favoritos) y nombre de variable a la funcion eliminar de favoritos
