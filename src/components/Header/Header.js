@@ -7,8 +7,10 @@ import Cookies from "universal-cookie";
 
 function Header() {
     const cookies = new Cookies()
-    let usuario = cookies.get("usuario")
-    
+    let usuario = cookies.get("usuario");
+    const logOut = () => {
+        cookies.remove("usuario")
+    }
     return (
         <div>
             <h1>UdeSA Movies</h1>
@@ -30,18 +32,27 @@ function Header() {
                     {usuario ? (
                         <li className="nav-item">
                             <Link to="/favoritos" className="nav-link">Favoritas</Link>
-                        </li>): null}
+                        </li>): ""}
 
                     {!usuario ? (
                         <li className="nav-item ml-auto">
                             <Link to="/registro" className="nav-link">Registro</Link>
-                        </li>): null}
+                        </li>): ""}
 
                     {!usuario ? (
                         <li className="nav-item">
                             <Link to="/login" className="nav-link">Login</Link>
                         </li>
-                    ): null}
+                    ): ""}
+                    {!usuario ?  "":
+                    (
+                        <li className="nav-item ml-auto">
+                            <button onClick={logOut} className="nav-link">
+                                Log out
+
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </div>

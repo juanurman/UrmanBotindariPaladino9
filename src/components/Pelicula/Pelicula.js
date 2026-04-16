@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import Cookies from "universal-cookie";
 
 //El id es simplemente un identificador único que tiene cada película, como si fuera su DNI. En tu componente lo usás para recordar cuál es la película que el usuario abrió al hacer clic en “ver más”. En lugar de guardar muchas variables para cada película, guardás solo un dato: el id de la película seleccionada. Entonces, cada vez que React dibuja la pantalla, compara el id de cada película con el que tenés guardado en el estado. Si coinciden, esa película se muestra “abierta” (con su descripción visible); si no coinciden, queda cerrada.
 
@@ -11,7 +12,9 @@ class Pelicula extends Component {
         super(props);
         this.state = {
             descripcion: [],
-            seleccionadoId: null
+            seleccionadoId: null,
+            usuario: undefined
+            
         };
     }
     componentDidMount(){
@@ -23,6 +26,9 @@ class Pelicula extends Component {
             return peli; 
         });
         this.setState({ peliculas: infoModificada });
+        const cookies = new Cookies()
+        let usuario = cookies.get("usuario")
+        console.log(usuario)
         }
     //Si hay un update inserta el verdescripcion y vuelve todo false
     componentDidUpdate(props) {
@@ -92,10 +98,15 @@ class Pelicula extends Component {
                                 Ver más
                             </Link>
 
-                            {/* botón opcional (comentado) */}
-                            {/* <a href="#" className="btn alert-primary">🩶</a> */}
+                            {this.usuario !== undefined ?
+                            <button>
+                                    Agregar a favoritos
+                            </button> 
+                             :
+                            "" 
+                            }
                         </div>
-
+                            
                     </article>
             )})
         );
