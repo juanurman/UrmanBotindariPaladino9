@@ -13,7 +13,8 @@ class Pelicula extends Component {
         this.state = {
             descripcion: [],
             seleccionadoId: null,
-            usuario: undefined
+            usuario: undefined,
+            favoritos: []
             
         };
     }
@@ -25,10 +26,19 @@ class Pelicula extends Component {
             // Devolvemos la película ya modificada
             return peli; 
         });
-        this.setState({ peliculas: infoModificada });
-        const cookies = new Cookies()
-        let usuario = cookies.get("usuario")
-        console.log(usuario)
+        let favoritos = localStorage.getItem("favoritos");
+        
+        // Si no hay nada, crear array vacío
+        if (favoritos === null) {
+            favoritos = [];
+        } else {
+            favoritos = JSON.parse(favoritos);
+        }
+        this.setState({ 
+            peliculas: infoModificada,
+            favoritos: favoritos    
+        });
+
         }
     //Si hay un update inserta el verdescripcion y vuelve todo false
     componentDidUpdate(props) {
@@ -41,8 +51,12 @@ class Pelicula extends Component {
             return peli; 
         });
             
-            this.setState({ peliculas: infoModificada });
+            this.setState({ 
+                peliculas: infoModificada,
+                // favoritos: favoritosCargados
+            });
         }
+        console.log(this.peliculas)
     }
     // se ejecuta cuando hacés click en el botón
     verMas(id) {
@@ -55,9 +69,41 @@ class Pelicula extends Component {
         });
 
         this.setState({ peliculas: infoCambiada });
+    };
+    agregarFavorito(pelicula) {
+
+    const tipo = pelicula.title ? "movie" : "tv";
+    
+    const nuevaPelicula = {
+        id: pelicula.id,
+        tipo: tipo,
+        titulo: pelicula.title || pelicula.name
+    };
+
+    // 2. Traemos la lista que ya está en el localStorage
+    let favoritosGuardados = localStorage.getItem("favoritos");
+    let listaFavoritos = []; // Empezamos con un array vacío por defecto
+
+    // Si ya había algo guardado, lo convertimos a array
+    if (favoritosGuardados !== null) {
+        listaFavoritos = JSON.parse(favoritosGuardados);
     }
 
+    // 3. Usamos el .push() clásico que ya conoces
+    // (No hacemos chequeos de si ya existe, simplemente lo agregamos)
+    listaFavoritos.push(nuevaPelicula);
+
+    // 4. Guardamos la lista actualizada de vuelta en el localStorage
+    localStorage.setItem("favoritos", JSON.stringify(listaFavoritos));
+    
+    // 5. Actualizamos el estado de React con la lista nueva para que la pantalla se entere
+    this.setState({ favoritos: listaFavoritos });
+  }
+
     render() {
+        const cookies = new Cookies()
+        let usuario = cookies.get("usuario");
+        console.log(usuario);
         return (
             // recorre el array de películas que viene por props. Viene del componente padre Peliculas.js
             this.props.info.map((pelicula) => {
@@ -98,12 +144,12 @@ class Pelicula extends Component {
                                 Ver más
                             </Link>
 
-                            {this.usuario !== undefined ?
-                            <button>
+                            {usuario !== undefined ?
+                            <button onClick={() => this.agregarFavorito(pelicula)}>
                                     Agregar a favoritos
                             </button> 
                              :
-                            "" 
+                            ""
                             }
                         </div>
                             
