@@ -72,42 +72,39 @@ class Pelicula extends Component {
     };
     agregarFavorito(pelicula) {
 
-    const tipo = pelicula.title ? "movie" : "tv";
-    
+    let favoritosGuardados = localStorage.getItem("favoritos");
+    // Ya que estamos con ternarios, podemos resumir esto también:
+    let listaFavoritos = favoritosGuardados !== null ? JSON.parse(favoritosGuardados) : [];
+
+    // 1. Armamos la nueva peli
     const nuevaPelicula = {
         id: pelicula.id,
-        tipo: tipo,
+        tipo: pelicula.title ? "movie" : "tv",
         titulo: pelicula.title || pelicula.name
     };
 
-    // 2. Traemos la lista que ya está en el localStorage
-    let favoritosGuardados = localStorage.getItem("favoritos");
-    let listaFavoritos = []; // Empezamos con un array vacío por defecto
+    // 2. Sacamos los IDs para poder usar .includes()
+    let listaId = listaFavoritos.map(fav => fav.id);
 
-    // Si ya había algo guardado, lo convertimos a array
-    if (favoritosGuardados !== null) {
-        listaFavoritos = JSON.parse(favoritosGuardados);
-    }
 
-    // 3. Usamos el .push() clásico que ya conoces
-    // (No hacemos chequeos de si ya existe, simplemente lo agregamos)
-    listaFavoritos.push(nuevaPelicula);
+    listaFavoritos = listaId.includes(pelicula.id)
+        ? listaFavoritos.filter(fav => fav.id !== pelicula.id) 
+        : listaFavoritos.concat(nuevaPelicula);                
 
-    // 4. Guardamos la lista actualizada de vuelta en el localStorage
+    // 4. Guardamos y actualizamos el estado
     localStorage.setItem("favoritos", JSON.stringify(listaFavoritos));
-    
-    // 5. Actualizamos el estado de React con la lista nueva para que la pantalla se entere
     this.setState({ favoritos: listaFavoritos });
   }
 
     render() {
         const cookies = new Cookies()
         let usuario = cookies.get("usuario");
-        console.log(usuario);
         return (
             // recorre el array de películas que viene por props. Viene del componente padre Peliculas.js
             this.props.info.map((pelicula) => {
                 const tipo = pelicula.title ? "movie" : "tv";
+                let listaDeIdsFavoritos = this.state.favoritos.map(fav => fav.id);
+                let estaEnFavoritos = listaDeIdsFavoritos.includes(pelicula.id)
 
                 return(
                     <article className="single-card-movie" key={pelicula.id}>
@@ -146,7 +143,7 @@ class Pelicula extends Component {
 
                             {usuario !== undefined ?
                             <button onClick={() => this.agregarFavorito(pelicula)}>
-                                    Agregar a favoritos
+                                    {estaEnFavoritos ? "Quitar de favoritos" : "Agregar a favoritos"}
                             </button> 
                              :
                             ""
