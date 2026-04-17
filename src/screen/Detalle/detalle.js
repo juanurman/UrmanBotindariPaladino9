@@ -18,9 +18,15 @@ class Detalle extends Component {
   }
 
   componentDidMount() {
-    const tipo = this.props.match.params.tipo;
-    const id = this.props.match.params.id;
+
+    //Estos son componentes que nos da React Router DOM para obteeer valor de la ruta de navegacion
+    //Ej: /detalle/movie/550
+    const tipo = this.props.match.params.tipo; //"movie"
+    const id = this.props.match.params.id; //"550"
+    //Cada pelicula en el ver detalle tiene un path asi <Link to={`/detalle/${tipo}/${pelicula.id}`}
+
     
+    //Con esta data me meto en el endpoint justo con la info de la pelicula que corresponde. 
     fetch(`https://api.themoviedb.org/3/${tipo}/${id}?api_key=e9f925b12dca795f233417e113ec423a`)
       .then(response => response.json())
       .then(data => this.setState({ 
@@ -69,6 +75,7 @@ class Detalle extends Component {
         <Header/>
         <main>
           <DetalleCard 
+              //Le paso como prop toda la data en el estado
               data={this.state.data} 
               
               //A el componente hijo le paso la funcion de agregarfavorito para el boton. 

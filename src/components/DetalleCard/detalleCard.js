@@ -1,46 +1,95 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Cookies from "universal-cookie";
 
 //Este componente es para que cuando se toca ver detalle. Este es el componente hijo de la screen Detalle.
 //Le paso como prop las props que traje del componente padre, la data ya filtrada y trabajada y la funcion agregar a favoritos
-function DetalleCard(props) {
+class DetalleCard extends Component {
 
-    //Le doy nombre de variable a la data que traigo del componente padre y a la funcion agregar a favoritos. 
-    const data = props.data;
-    const agregar = props.agregar;
+    constructor(props){
+        super(props);
+        this.state = {
+            favoritos: []
+        }
+    }
 
-    return (
-        <div>
-            {/* Imagen, serie y pelicula comparten nombre en el obj literal*/}
-            <img
-                src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
-                alt={data.title || data.name} 
-            />
+    componentDidMount(){
+        // Traigo favoritos del storage
+        let favoritosGuardados = localStorage.getItem("favoritos");
 
-            {/* Título, title es de pelicula, name es de serie*/}
-            <h2>Titulo: {data.title || data.name}</h2>
+        // Si no hay nada, array vacío
+        let listaFavoritos = favoritosGuardados !== null ? JSON.parse(favoritosGuardados) : [];
 
-            {/* Rating, como en la imagen comparten nombre en el obj literal de la API */}
-            <p>Rating: {data.vote_average}</p>
+        this.setState({ favoritos: listaFavoritos });
+    }
 
-            {/* Fecha, release_date es de pelciulaas. first_air_date es de serie */}
-            <p>Fecha estreno: {data.release_date || data.first_air_date}</p>
+    // cuando clickeo el boton
+    manejarClick() {
+        // ejecuto la función que viene del padre
+        this.props.agregar();
 
-            {/* Duracion (solo aparece en  peliculas) */}
-            {data.runtime && <p>Duración: {data.runtime} min</p>}
+        // vuelvo a leer storage
+        let favoritosGuardados = localStorage.getItem("favoritos");
+        let listaFavoritos = favoritosGuardados !== null ? JSON.parse(favoritosGuardados) : [];
 
-            {/* Sinopsis, tanto pelicula como serie comparten el nombre en el obj literal */}
-            <p>Sinopsis: {data.overview}</p>
+        // actualizo state, esto vuelve a renderiar
+        this.setState({ favoritos: listaFavoritos });
+    }
 
-            {/* Géneros, tambien comparten. Como a veces es mas de uno se juntan con el .join. */}
-            <p>
-                Genero/s: {data.genres.map(genero => genero.name).join(", ")}
-            </p>
+    render() {
 
-            <button onClick={agregar}>
-                Agregar a favoritos
-            </button> 
-        </div>
-    );
+        const cookies = new Cookies();
+        let usuario = cookies.get("usuario");
+
+        //La data viene como prop de la screen detalle.js. 
+        const data = this.props.data;
+
+        //MISMA LOGICA QUE EN PELICULA
+        //En listaId guarda los id de las peliculas favoritas que estan en el state
+        //El esta en favoritos es un booleano que chequea que en la listaIs este el id. Sirve para el ternario del boton
+        let listaIds = this.state.favoritos.map(fav => fav.id);
+        let estaEnFavoritos = listaIds.includes(data.id);
+
+        return (
+            <div>
+                {/* Imagen */}
+                <img
+                    src={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
+                    alt={data.title || data.name} 
+                />
+
+                {/* Titulo */}
+                <h2>Titulo: {data.title || data.name}</h2>
+
+                {/* Rating */}
+                <p>Rating: {data.vote_average}</p>
+
+                {/* Fecha */}
+                <p>Fecha estreno: {data.release_date || data.first_air_date}</p>
+
+                {/* Duracion */}
+                {data.runtime && <p>Duración: {data.runtime} min</p>}
+
+                {/* Sinopsis */}
+                <p>Sinopsis: {data.overview}</p>
+
+                {/* Géneros */}
+                <p>
+                    Genero/s: {data.genres.map(genero => genero.name).join(", ")}
+                </p>
+
+                {/* MISMO if QUE EN PELICULA */}
+                {
+                    usuario !== undefined ?
+                    <button onClick={() => this.manejarClick()}>
+                        {estaEnFavoritos ? "Quitar de favoritos" : "Agregar a favoritos"}
+                    </button>
+                    :
+                    ""
+                }
+
+            </div>
+        );
+    }
 }
 
 export default DetalleCard;

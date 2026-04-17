@@ -1,5 +1,4 @@
 import Footer from "./components/Footer/Footer.js";
-import Header from "./components/Header/Header.js";
 import {Switch, Route} from "react-router-dom"
 import Home from "./screen/Home/Home.js"
 import NotFound from "./screen/NotFound/notFound.js"

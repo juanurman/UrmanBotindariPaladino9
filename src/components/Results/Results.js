@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import Header from "../Header/Header.js";
+import Search from "../Search/Search.js";
 
 //Se importa el componente pelicula, que se renderiza si lo que se busca coincide con algo
 import Pelicula from "../Pelicula/Pelicula";
@@ -41,6 +43,7 @@ class Results extends Component{
     render(){
     return (
         <>
+        <Header />
         <section className="row cards">
             {this.state.resultados === 0 ?
             <Loader/>:
