@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Loader from "../../components/Loader/loader.js";
 import DetalleCard from "../../components/DetalleCard/detalleCard.js";
+import Header from "../../components/Header/Header.js";
 
 //Ese es un componente el cual toma como prop un id el cual saca con const id = this.props.match.params.id; cuando se monta el componente.
 //Cuando tiene el id, me meto directo en la API de ese Id (CON EL API KEY QUE ES LA CONTRA) y la info la guardo en el estado.
@@ -64,14 +65,17 @@ class Detalle extends Component {
     }
 
     return (
-      <main>
-        <DetalleCard 
-            data={this.state.data} 
-
-            //A el componente hijo le paso la funcion de agregarfavorito para el boton. 
-            agregar={() => this.agregarFavorito()} 
-        />
-      </main>
+      <>
+        <Header/>
+        <main>
+          <DetalleCard 
+              data={this.state.data} 
+              
+              //A el componente hijo le paso la funcion de agregarfavorito para el boton. 
+              agregar={() => this.agregarFavorito()} 
+              />
+        </main>
+      </>
     );
   }
 }

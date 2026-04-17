@@ -87,7 +87,9 @@ nav {
 .hide{
     display: none;
 }
-
+h2{
+    margin-top: 2vw;
+}
 @media(min-width: 765px){
     nav {
         grid-template-columns: 1fr;

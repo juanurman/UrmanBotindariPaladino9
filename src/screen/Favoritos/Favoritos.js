@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import FavoritoItem from "../../components/FavoritoItem/favoritoItem.js";
-
+import Header from "../../components/Header/Header";
 class Favoritos extends Component {
   constructor(props) {
     super(props);
@@ -40,29 +40,32 @@ class Favoritos extends Component {
     const peliculas = this.state.favoritos.filter(i => i.tipo === "movie");
     const series = this.state.favoritos.filter(i => i.tipo === "tv");
     return (
-      <div>
-        <h2>Películas favoritas</h2>
+      <>
+        <Header/>
+        <div>
+          <h2>Películas favoritas</h2>
 
-        {/* Mapeo la variable películas y le paso info al componente Favoritoitem. Tambien le paso la info del id a eliminar para el boton eliminar */}
-        {peliculas.map(pelicula => (
-            <FavoritoItem 
-                key={pelicula.id} 
-                item={pelicula} 
-                eliminar={(id) => this.eliminarFavorito(id)} 
-            />
-        ))}
+          {/* Mapeo la variable películas y le paso info al componente Favoritoitem. Tambien le paso la info del id a eliminar para el boton eliminar */}
+          {peliculas.map(pelicula => (
+              <FavoritoItem 
+                  key={pelicula.id} 
+                  item={pelicula} 
+                  eliminar={(id) => this.eliminarFavorito(id)} 
+                  />
+          ))}
 
-        <h2>Series favoritas</h2>
+          <h2>Series favoritas</h2>
 
-        {/* Mapeo la variable series y le paso la iformacion al componente FavoritoItem. Tambien le paso la info del id a eliminar para el boton eliminar */}
-        {series.map(serie => (
-            <FavoritoItem 
-                key={serie.id} 
-                item={serie} 
-                eliminar={(id) => this.eliminarFavorito(id)} 
-            />
-        ))}
-      </div>
+          {/* Mapeo la variable series y le paso la iformacion al componente FavoritoItem. Tambien le paso la info del id a eliminar para el boton eliminar */}
+          {series.map(serie => (
+              <FavoritoItem 
+                  key={serie.id} 
+                  item={serie} 
+                  eliminar={(id) => this.eliminarFavorito(id)} 
+                  />
+          ))}
+        </div>
+    </>
     );
   }
 }

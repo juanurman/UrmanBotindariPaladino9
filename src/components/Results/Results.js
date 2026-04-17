@@ -41,10 +41,12 @@ class Results extends Component{
     render(){
     return (
         <>
+        <section className="row cards">
             {this.state.resultados === 0 ?
             <Loader/>:
             <Pelicula info={this.state.resultados}/>
-            }
+        }
+        </section>
         </>
         );
     

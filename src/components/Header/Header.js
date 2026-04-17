@@ -10,6 +10,7 @@ function Header() {
     let usuario = cookies.get("usuario");
     const logOut = () => {
         cookies.remove("usuario")
+        alert("Se cerro sesión de forma correcta, recargue la página")
     }
     return (
         <div>
@@ -47,9 +48,8 @@ function Header() {
                     {!usuario ?  "":
                     (
                         <li className="nav-item ml-auto">
-                            <button onClick={logOut} className="nav-link">
+                            <button  onClick={logOut} className="nav-link">
                                 Log out
-
                             </button>
                         </li>
                     )}

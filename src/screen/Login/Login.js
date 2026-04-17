@@ -1,13 +1,16 @@
 import React from "react";
 import FormLogin from "../../components/FormLogin/FormLogin";
-
+import Header from "../../components/Header/Header";
 
 function Login() {
     return(
-        <div>
-            <h2 className="alert alert-primary">Registro</h2>
-            <FormLogin/>
-        </div>
+        <>
+            <Header/>
+            <div>
+                <h2 className="alert alert-primary">Login</h2>
+                <FormLogin/>
+            </div>
+        </>
     )
 }
 
