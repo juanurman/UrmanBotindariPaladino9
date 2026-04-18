@@ -24,15 +24,40 @@ class DetalleCard extends Component {
 
     // cuando clickeo el boton
     manejarClick() {
-        // ejecuto la función que viene del padre
-        this.props.agregar();
 
-        // vuelvo a leer storage
-        let favoritosGuardados = localStorage.getItem("favoritos");
-        let listaFavoritos = favoritosGuardados !== null ? JSON.parse(favoritosGuardados) : [];
+        const data = this.props.data;
 
-        // actualizo state, esto vuelve a renderiar
-        this.setState({ favoritos: listaFavoritos });
+        // Traigo favoritos del storage
+        let storage = localStorage.getItem("favoritos");
+        let favoritos = storage !== null ? JSON.parse(storage) : [];
+
+        // Armo un array solo de ids
+        let listaIds = favoritos.map(fav => fav.id);
+
+        // Chequeo si ya está
+        let estaEnFavoritos = listaIds.includes(data.id);
+
+        if (estaEnFavoritos) {
+            // eliminar
+            let nuevos = favoritos.filter(fav => fav.id !== data.id);
+            localStorage.setItem("favoritos", JSON.stringify(nuevos));
+            this.setState({ favoritos: nuevos });
+
+            // Aviso al padre (pantalla Favoritos)
+            if (this.props.eliminar) {
+                this.props.eliminar();
+            }
+
+        } else {
+            // agregar
+            favoritos.push({
+                id: data.id,
+                tipo: data.title ? "movie" : "tv"
+            });
+
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            this.setState({ favoritos: favoritos });
+        }
     }
 
     render() {
@@ -44,8 +69,6 @@ class DetalleCard extends Component {
         const data = this.props.data;
 
         //MISMA LOGICA QUE EN PELICULA
-        //En listaId guarda los id de las peliculas favoritas que estan en el state
-        //El esta en favoritos es un booleano que chequea que en la listaIs este el id. Sirve para el ternario del boton
         let listaIds = this.state.favoritos.map(fav => fav.id);
         let estaEnFavoritos = listaIds.includes(data.id);
 
@@ -77,7 +100,6 @@ class DetalleCard extends Component {
                     Genero/s: {data.genres.map(genero => genero.name).join(", ")}
                 </p>
 
-                {/* MISMO if QUE EN PELICULA */}
                 {
                     usuario !== undefined ?
                     <button onClick={() => this.manejarClick()}>
