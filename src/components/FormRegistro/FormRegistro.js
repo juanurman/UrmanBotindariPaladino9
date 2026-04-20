@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 
-//El componente registro esta formado por un componente con estado. El cual comienza con las propiedades email, paswword y error, todas en null.
 class FormRegistro extends Component {
     constructor(props){
         super(props)
@@ -12,25 +11,13 @@ class FormRegistro extends Component {
         }
     }
 
-    // cambios(e) se ejecuta cuando el usuario escribe.
-    // e.target.name = nombre del input (email)
-    // e.target.value = es el valor que esta en el estdo
-    // Actualiza el state usando el name como clave    
     cambios(e){
         this.setState({
-            [e.target.name]: e.target.value 
+            [e.target.name]: e.target.value
         })
     }
 
-
-
-    //Sr crea la funvion eviatrsubmit.
-    //Esta funcion cuando se llama evita que se mande el submit y se vuelva a renderizar toda la pagina. 
-    //Se guardan los valores del estado en diferentes variables para poder evaluarlas posteriormente.
-
-    //Dentro de la funcion hay un for, este recorre el state en email y si el email el cual se puso ya esta, le pone valor un mensaje a la variable error
     evitarsubmit(e){
-            
         e.preventDefault()
 
         let usuarios = JSON.parse(localStorage.getItem("usuarios"))
@@ -63,18 +50,7 @@ class FormRegistro extends Component {
             this.props.history.push("/login")
         }
     }
-    //El render lo que tiene dentro es todo lo que se renderiza en la screen, osea lo que se ve 
-    //El render tiene todas las etiquetas especificas a la hora de hacer un form, label, input. El label dentro tiene el type que es email. 
-    //esto se repite dos veces, una vez para el mail, otra para la contraseña. 
-    //La etiqueta tiene el evento que cuando se clickea llama a la funcione evitarSubmit. 
-    // name: indica qué propiedad del state se actualiza
-    // value: muestra el valor guardado en el state (input controlado por React)
-    //Esta onChange que cuando se cambia algo llama ala funcion cambios
 
-    //Luego esta el this que es un if ternario. Se pregunta si esta vacio el estado en erorr, si no esta vacio, muetsra por pantalla el error sacandolo del state.
-    //Pero si si esta vacio, no muestra nada. 
-
-    //Debajo de todo esta el boton para registrarse. 
     render() {
         return (
             <div className="row justify-content-center">
@@ -106,7 +82,7 @@ class FormRegistro extends Component {
                             />
                         </div>
 
-                        
+
                         {this.state.error !== "" ? (<p className="text-danger">{this.state.error}</p>) : null}
 
                         <button type="submit" className="btn btn-primary btn-block">
@@ -124,16 +100,3 @@ class FormRegistro extends Component {
 }
 
 export default withRouter(FormRegistro);
-
-
-
-
-
-
-
-
-
-
-
-
-

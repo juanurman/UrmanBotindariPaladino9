@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../../components/Header/Header";
-//Cuando ninguna route se cumple, el switch genera que nos lleve a 404 not found. 
 
 function NotFound(){
     return(
@@ -12,4 +11,3 @@ function NotFound(){
 }
 
 export default NotFound
-

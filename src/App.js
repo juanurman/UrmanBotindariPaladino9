@@ -25,7 +25,7 @@ function App() {
         <Route path="" component={NotFound}/>
       </Switch>
       </div>
-      <Footer/> 
+      <Footer/>
     </div>
   );
 }

@@ -10,13 +10,10 @@ class Favoritos extends Component {
     };
   }
 
-  //La idea es agarrar del localstorage todos los favoritos y meterlos en el state de este compoennte para ahi trabajarlos y renderizarlos
-  //Como puede haber mas de un elementoo tenfo que hacer la cantidad de fetch dependiendo de la cantidad de objetos en el array favoritos. Recien una vez que ya se hayan hehco todos los fetch ahi si se guarda todo en el state
   componentDidMount() {
     const storage = localStorage.getItem("favoritos");
 
     if (storage !== null) {
-
       const favoritosGuardados = JSON.parse(storage);
 
       let resultados = [];
@@ -47,9 +44,7 @@ class Favoritos extends Component {
     console.log(storage)
   }
 
-  // Hago al funcion para eliminar de favoritos una pelicula
   eliminarFavorito(id) {
-
     let storage = localStorage.getItem("favoritos");
     let favoritos = storage !== null ? JSON.parse(storage) : [];
 
@@ -62,7 +57,6 @@ class Favoritos extends Component {
   }
 
   render() {
-
     const peliculas = this.state.favoritos.filter(i => i.title);
     const series = this.state.favoritos.filter(i => i.name);
 
@@ -73,20 +67,20 @@ class Favoritos extends Component {
           <h2>Películas favoritas</h2>
 
           {peliculas.map(pelicula => (
-          <DetalleCard 
-              key={pelicula.id} 
-              data={pelicula} 
-              eliminar={() => this.eliminarFavorito(pelicula.id)} 
+          <DetalleCard
+              key={pelicula.id}
+              data={pelicula}
+              eliminar={() => this.eliminarFavorito(pelicula.id)}
           />
           ))}
 
           <h2>Series favoritas</h2>
 
           {series.map(serie => (
-          <DetalleCard 
-              key={serie.id} 
-              data={serie} 
-              eliminar={() => this.eliminarFavorito(serie.id)} 
+          <DetalleCard
+              key={serie.id}
+              data={serie}
+              eliminar={() => this.eliminarFavorito(serie.id)}
           />
           ))}
         </div>
