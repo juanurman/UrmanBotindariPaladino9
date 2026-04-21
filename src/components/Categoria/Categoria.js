@@ -30,7 +30,7 @@ class Categoria extends Component {
         fetch(`${urlBase}&page=1`)
             .then(res => res.json())
             .then(data => this.setState({ peliculas: data.results }))
-            .catch(err => console.log(err));
+            .catch(error => console.log(error));
     }
 
     componentDidUpdate(props) {
@@ -44,7 +44,7 @@ class Categoria extends Component {
                 fetch(`${urlBase}&page=1`)
                     .then(res => res.json())
                     .then(data => this.setState({ peliculas: data.results }))
-                    .catch(err => console.log(err));
+                    .catch(error => console.log(error));
             });
         }
         console.log(this.state.peliculas)
@@ -72,7 +72,7 @@ class Categoria extends Component {
 
     render() {
         let peliculasFiltradas = this.state.peliculas.filter(peli => {
-            const tituloSeguro = peli.title || peli.name || "";
+            const tituloSeguro = peli.title || peli.name;
 
             return tituloSeguro.toLowerCase().includes(this.state.value.toLowerCase());
         });

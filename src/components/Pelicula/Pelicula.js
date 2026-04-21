@@ -56,7 +56,7 @@ class Pelicula extends Component {
 
     agregarFavorito(pelicula) {
         let favoritosGuardados = localStorage.getItem("favoritos");
-        let listaFavoritos = favoritosGuardados !== null ? JSON.parse(favoritosGuardados) : [];
+        let listaFavoritos = JSON.parse(favoritosGuardados);
 
         const nuevaPelicula = {
             id: pelicula.id,
